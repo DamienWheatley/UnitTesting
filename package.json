@@ -1,0 +1,35 @@
+{
+  "name": "table-tennis-table",
+  "version": "1.0.0",
+  "description": "A ranking system for table tennis",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive && cucumber-js",
+    "mocha": "mocha --recursive",
+    "feature": "cucumber-js"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cucumber": "^4.2.1",
+    "eslint": "^4.19.1",
+    "mocha": "^5.2.0",
+    "mocha-sinon": "^2.1.0",
+    "sinon": "^5.0.10"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.9"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DamienWheatley/UnitTesting.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DamienWheatley/UnitTesting/issues"
+  },
+  "homepage": "https://github.com/DamienWheatley/UnitTesting#readme"
+}
