@@ -15,6 +15,31 @@ describe('league', function () {
       expect(players).to.have.lengthOf(1);
       expect(players[0]).to.have.members(['Bob']);
     });
+    it('puts the new player last', function () {
+      const league = gameState.createLeague();
+      league.addPlayer('Bob');
+      league.addPlayer('Elliot');
+      league.addPlayer('Perry');
+      league.addPlayer('JD');
+      league.addPlayer('Turk');
+      
+      league.addPlayer('Carla');
+      const players = league.getPlayers();
+
+      expect(players[2]).to.have.members(['JD','Turk','Carla']);
+    });
+    it('does not accept special characters', function () {
+      const league = gameState.createLeague();
+      
+      assert.Throw(function (){league.addPlayer('Janitor?')},'Player name Janitor? contains invalid characters');    
+    });
+    it('does not accept duplicate names', function (){
+      const league = gameState.createLeague();
+
+      league.addPlayer('Bob');
+
+      assert.Throw(function(){ league.addPlayer('Bob')},"Cannot add player \'Bob\' because they are already in the game");
+    });
   });
 
   describe('#getPlayers', function () {
@@ -29,13 +54,6 @@ describe('league', function () {
       expect(players[0]).to.have.members(['John']);
       expect(players[1]).to.have.members(['Bob']);
     });
-    it('checks there are players', function () {
-      const league = gameState.createLeague();
-
-      const players = league.getPlayers();
-
-      expect(players[0]).to.equal('No players yet');
-    })
   });
 
   describe('#recordWin', function () {
@@ -60,6 +78,16 @@ describe('league', function () {
 
       assert.Throw(function () {league.recordWin('Bob','Perry')},"Cannot record match result. Winner \'Bob\' must be one row below loser \'Perry\'");
     });
+    it('cannot challenge someone two rows higher in the table', function () {
+      const league = gameState.createLeague();
+      league.addPlayer('Bob');
+      league.addPlayer('Elliot');
+      league.addPlayer('Perry');
+      league.addPlayer('JD');
+      league.addPlayer('Turk');
+
+      assert.Throw(function () {league.recordWin('Turk','Bob')},"Cannot record match result. Winner \'Turk\' must be one row below loser \'Bob\'");
+    });
   });
 
   describe('#getWinner', function () {
@@ -70,7 +98,7 @@ describe('league', function () {
       league.addPlayer('Perry');
       league.addPlayer('JD');
       league.addPlayer('Turk');
-      league.recordWin('Perry','Bob')
+      league.recordWin('Perry','Bob');
 
       const winner = league.getWinner();
 
