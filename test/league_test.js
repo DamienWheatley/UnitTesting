@@ -5,9 +5,12 @@ const assert = chai.assert;
 const gameState = require('../src/league');
 
 describe('league', function () {
+  let league;
   describe('#addPlayer', function () {
+    beforeEach(function () {
+      league = gameState.createLeague();
+    });
     it('adds a player to the game', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
 
       const players = league.getPlayers();
@@ -16,7 +19,6 @@ describe('league', function () {
       expect(players[0]).to.have.members(['Bob']);
     });
     it('puts the new player last', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('Elliot');
       league.addPlayer('Perry');
@@ -29,13 +31,9 @@ describe('league', function () {
       expect(players[2]).to.have.members(['JD','Turk','Carla']);
     });
     it('does not accept special characters', function () {
-      const league = gameState.createLeague();
-      
       assert.Throw(function (){league.addPlayer('Janitor?')},'Player name Janitor? contains invalid characters');    
     });
     it('does not accept duplicate names', function (){
-      const league = gameState.createLeague();
-
       league.addPlayer('Bob');
 
       assert.Throw(function(){ league.addPlayer('Bob')},"Cannot add player \'Bob\' because they are already in the game");
@@ -43,8 +41,10 @@ describe('league', function () {
   });
 
   describe('#getPlayers', function () {
+    beforeEach(function () {
+      league = gameState.createLeague();
+    });
     it('prints winner first', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('John');
       league.recordWin('John','Bob');
@@ -57,8 +57,10 @@ describe('league', function () {
   });
 
   describe('#recordWin', function () {
+    beforeEach(function () {
+      league = gameState.createLeague();
+    });
     it('swaps player up if challenger wins', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('Elliot');
       league.recordWin('Elliot','Bob');
@@ -69,7 +71,6 @@ describe('league', function () {
       expect(players[1]).to.have.members(['Bob']);
     });
     it('cannot challenge someone lower in the table', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('Elliot');
       league.addPlayer('Perry');
@@ -79,7 +80,6 @@ describe('league', function () {
       assert.Throw(function () {league.recordWin('Bob','Perry')},"Cannot record match result. Winner \'Bob\' must be one row below loser \'Perry\'");
     });
     it('cannot challenge someone two rows higher in the table', function () {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('Elliot');
       league.addPlayer('Perry');
@@ -91,8 +91,10 @@ describe('league', function () {
   });
 
   describe('#getWinner', function () {
+    beforeEach(function () {
+      league = gameState.createLeague();
+    });
     it('gets the player in first place', function() {
-      const league = gameState.createLeague();
       league.addPlayer('Bob');
       league.addPlayer('Elliot');
       league.addPlayer('Perry');
