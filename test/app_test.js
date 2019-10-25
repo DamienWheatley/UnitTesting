@@ -1,7 +1,6 @@
 require('mocha-sinon');
 const chai = require('chai');
 const expect = chai.expect;
-const assert = chai.assert;
 
 const app = require('../src/app');
 const gameState = require('../src/league');
